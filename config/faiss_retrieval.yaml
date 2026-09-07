@@ -1,0 +1,10 @@
+# FAISS Vector Indexing & LunaDNA Similarity Retrieval
+faiss:
+  vector_dimension: 256
+  metric_type: "METRIC_INNER_PRODUCT" # Cosine similarity after unit normalization
+  index_factory_string: "Flat" # "IVF1024,Flat" for large scale, "Flat" for exact
+  normalize_l2: true
+  top_k_default: 5
+  evaluation_top_k: [1, 5, 10]
+  persistence_path: "outputs/faiss_index/lunadna_faiss.index"
+  metadata_path: "outputs/faiss_index/lunadna_metadata.parquet"

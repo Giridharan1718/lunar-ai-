@@ -1,0 +1,87 @@
+# ISRO Lunar Image Registration - Global Default Configuration
+project:
+  name: "Chandrayaan-2 Lunar Optical Image Registration Pipeline"
+  version: "1.0.0"
+  mission: "Chandrayaan-2 Orbiter Payloads (OHRC / TMC-2 / IIR) to LROC Reference"
+  target_body: "Moon"
+  coordinate_system: "Lunar Selenographic (Mean Earth / Polar Axis - ME)"
+
+paths:
+  data_raw: "data/raw"
+  data_processed: "data/processed"
+  data_ground_truth: "data/ground_truth"
+  data_reference: "data/reference"
+  data_synthetic: "data/synthetic_samples"
+  outputs_reports: "outputs/reports"
+  outputs_visualizations: "outputs/visualizations"
+  outputs_features: "outputs/features"
+  outputs_matches: "outputs/matches"
+  outputs_registered: "outputs/registered"
+  outputs_lunadna: "outputs/lunadna"
+  outputs_faiss: "outputs/faiss_index"
+  outputs_mosaics: "outputs/mosaics"
+  outputs_logs: "outputs/logs"
+
+hardware:
+  device: "cuda" # fallback to "cpu" if CUDA unavailable
+  num_workers: 4
+  precision: "float32"
+  seed: 42
+
+terrain_analysis:
+  crater_min_radius_px: 5
+  crater_max_radius_px: 120
+  shadow_threshold_intensity: 45
+  texture_glcm_distances: [1, 3, 5]
+  texture_glcm_angles: [0, 0.785, 1.57, 2.356]
+
+illumination:
+  shadow_cut_level: 0.15
+  high_sun_cut_level: 0.85
+  difficulty_classes:
+    easy: { min_contrast: 40.0, max_shadow_pct: 0.25 }
+    moderate: { min_contrast: 20.0, max_shadow_pct: 0.50 }
+    difficult: { min_contrast: 0.0, max_shadow_pct: 1.00 }
+
+lunadna:
+  descriptor_dim: 256
+  grid_bins: [8, 8]
+  spatial_pyramid_levels: 3
+  pca_whitening: true
+
+faiss:
+  index_type: "IndexFlatIP" # Inner Product / Cosine Similarity after L2 norm
+  top_k: 5
+  nprobe: 16
+
+superpoint:
+  max_keypoints: 2048
+  keypoint_threshold: 0.005
+  nms_radius: 4
+
+grid_distribution:
+  grid_rows: 8
+  grid_cols: 8
+  max_points_per_cell: 24
+  min_distance_px: 12
+
+lightglue:
+  filter_threshold: 0.15
+  depth_confidence: 0.95
+  width_confidence: 0.99
+
+magsac:
+  reprojection_threshold_px: 3.0
+  confidence: 0.999
+  max_iterations: 10000
+  model: "HOMOGRAPHY" # or "AFFINE"
+
+ecc:
+  warp_mode: "HOMOGRAPHY" # "TRANSLATION", "EUCLIDEAN", "AFFINE", "HOMOGRAPHY"
+  max_iterations: 150
+  termination_eps: 1e-6
+  gauss_filt_size: 5
+
+mosaic:
+  blend_method: "multiband" # "feather", "multiband", "average"
+  feather_width_px: 40

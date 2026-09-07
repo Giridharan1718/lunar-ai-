@@ -1,0 +1,49 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "lunar_core"
+version = "1.0.0"
+description = "ISRO Chandrayaan-2 High-Precision Lunar Image Registration System with SuperPoint, LightGlue, MAGSAC++, and LunaDNA FAISS Retrieval"
+readme = "README.md"
+requires-python = ">=3.10"
+authors = [
+    { name = "ISRO Remote Sensing & Computer Vision Team", email = "cv-lunar@isro.gov.in" }
+]
+keywords = [
+    "lunar-registration", "chandrayaan-2", "remote-sensing", "superpoint",
+    "lightglue", "magsac", "faiss", "lunadna", "computer-vision", "isro"
+]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Science/Research",
+    "Topic :: Scientific/Engineering :: Image Processing",
+    "Topic :: Scientific/Engineering :: GIS",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+]
+dependencies = [
+    "numpy>=1.24.0",
+    "torch>=2.0.0",
+    "opencv-python-headless>=4.8.0",
+    "scikit-image>=0.21.0",
+    "scipy>=1.10.0",
+    "pandas>=2.0.0",
+    "matplotlib>=3.7.0",
+    "plotly>=5.15.0",
+    "pyyaml>=6.0.1",
+    "tqdm>=4.66.0",
+    "loguru>=0.7.2"
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.4.0",
+    "black>=23.7.0",
+    "flake8>=6.1.0",
+    "mypy>=1.5.0"
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
